@@ -10,9 +10,9 @@ function createPlayer(name, marker){
     return {name, marker, score};
 }
 
-function playGame(){
-    const player1 = createPlayer("p1", "X");
-    const player2 = createPlayer("p2", "O");
+function playGame(playerName1, playerName2){
+    const player1 = createPlayer(playerName1, "X");
+    const player2 = createPlayer(playerName2, "O");
     const gameboard = createGameboard();
     console.table(gameboard.gameboard);
     
@@ -98,23 +98,42 @@ function playGame(){
             const {someoneWins, winnerName, tie} = checkWinner();
             if(someoneWins){
                 console.log(`Congratulations! ${winnerName} wins!`);
-            }else if(!tie){
-                turn();
-            }else{
+            }else if(tie){
                 console.log("Tie.")
             }
         }else{
                 console.log("This cell is alredy filled.");  
-                turn();
         }
     }
-
-    turn();
+    return { turn, gameboardArray }
 }
 
-playGame();
+function displayGame(){
+    const gameObj = playGame();
+    
+    const createCross = () =>{
+        const cross = document.createElement("div");
+        cross.classList.add("cross");
+        const crossLine1 = document.createElement("div");
+        crossLine1.classList.add("cross-right-line");
+        const crossLine2 = document.createElement("div");
+        crossLine2.classList.add("cross-left-line");
+        cross.appendChild(crossLine1);
+        crossLine2.appendChild(crossLine2);
+        return cross;
+    }
+
+    const createNought = () => {
+        const nought = document.createElement("div");
+        nought.classList.add("nought");
+        return nought;
+    }
+
+    const rerender = (row, column) =>{   
+        const gameboardArray = gameObj.gameboardArray;
+    }
+
+    const gameboardContainer = document.querySelector(".container");
 
 
-
-
-
+}
