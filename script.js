@@ -11,25 +11,19 @@ function createPlayer(name, marker){
 }
 
 function playGame(playerName1, playerName2){
-    const player1 = createPlayer(playerName1, "X");
+    return function(){const player1 = createPlayer(playerName1, "X");
     const player2 = createPlayer(playerName2, "O");
     const gameboard = createGameboard();
     console.table(gameboard.gameboard);
     
     let activePlayer = player1;
 
-    const getPlayerInput = () =>{
-        const row = prompt("Enter row (0, 1, 2):");
-        const column = prompt("Enter column (0, 1, 2):");
-        return [(+row), (+column)];
-    }
-
     const changeActivePlayer = () =>{
         activePlayer = activePlayer === player1 ? player2 : player1;
     }
+
     
-
-
+    
     const checkWinner = () => { 
         let winMarker = "";
         const gameboardArray = gameboard.gameboard;
@@ -88,8 +82,7 @@ function playGame(playerName1, playerName2){
         return {someoneWins, winner, tie};
     }
 
-    const turn = () =>{
-        const [row, column] = getPlayerInput();
+    const turn = (row, column) =>{
         if (!gameboard.gameboard[row][column]){
             gameboard.gameboard[row][column] += activePlayer.marker;
             changeActivePlayer();
@@ -105,12 +98,13 @@ function playGame(playerName1, playerName2){
                 console.log("This cell is alredy filled.");  
         }
     }
-    return { turn, gameboardArray }
+    return { turn, gameboard }}
 }
 
 function displayGame(){
-    const gameObj = playGame();
-    
+    const gameObj = playGame()();
+    console.log(gameObj);
+    const gameboardArray = gameObj.gameboard.gameboard;
     const createCross = () =>{
         const cross = document.createElement("div");
         cross.classList.add("cross");
@@ -119,7 +113,7 @@ function displayGame(){
         const crossLine2 = document.createElement("div");
         crossLine2.classList.add("cross-left-line");
         cross.appendChild(crossLine1);
-        crossLine2.appendChild(crossLine2);
+        cross.appendChild(crossLine2);
         return cross;
     }
 
@@ -129,11 +123,31 @@ function displayGame(){
         return nought;
     }
 
-    const rerender = (row, column) =>{   
-        const gameboardArray = gameObj.gameboardArray;
+    const render = () =>{   
+        gameboardArray.forEach((el, i)=>{
+            const row = i;
+            el.forEach((elem, column) => {
+                const cell = document.querySelector(`#btn${row}${column}`);
+                if (elem === "X" && !cell.hasChildNodes()) {
+                    cell.appendChild(createCross());
+                }else if(elem === "O" && !cell.hasChildNodes()){
+                    cell.appendChild(createNought());
+                }
+            });
+        });
     }
 
-    const gameboardContainer = document.querySelector(".container");
-
-
+    const container = document.querySelector(".container");
+    container.addEventListener("click", e => {
+        const target = e.target;
+        if (target.id !== "tictactoe") {
+            const row = +target.id[3];
+            console.log(target.id[3]);
+            const column = +target.id[4];
+            gameObj.turn(row, column);
+            render();
+        }
+    });
 }
+
+displayGame();
