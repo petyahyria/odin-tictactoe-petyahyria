@@ -62,13 +62,13 @@ function playGame(playerName1, playerName2){
             winMarker = "O";
         }
 
-        let winner = "";
+        let winnerName = "";
 
         
         if(winMarker === player1.marker){
-            winner = player1.name;
+            winnerName = player1.name;
         }else if(winMarker === player2.marker){
-            winner = player2.name;
+            winnerName = player2.name;
         }
 
         let tie = false;
@@ -79,21 +79,16 @@ function playGame(playerName1, playerName2){
 
         let someoneWins = winMarker ? true : false;
 
-        return {someoneWins, winner, tie};
+        return {someoneWins, winnerName, tie};
     }
 
     const turn = (row, column) =>{
-        if (!gameboard.gameboard[row][column]){
+        if (!gameboard.gameboard[row][column] ){
             gameboard.gameboard[row][column] += activePlayer.marker;
             changeActivePlayer();
             console.table(gameboard.gameboard);
             console.log(activePlayer.name);
-            const {someoneWins, winner, tie} = checkWinner();
-            if(someoneWins){
-                
-            }else if(tie){
-
-            }
+            
         }else{
                 console.log("This cell is alredy filled.");  
         }
@@ -138,7 +133,7 @@ function displayGame(){
     }
 
     const container = document.querySelector(".container");
-    container.addEventListener("click", e => {
+    const eventFunction = e => {
         const target = e.target;
         let ids = ["btn00","btn01","btn02","btn10","btn11","btn12","btn20","btn21","btn22"]
 
@@ -150,7 +145,16 @@ function displayGame(){
             gameObj.turn(row, column);
             render();
         }
-    });
+
+        const {someoneWins, winnerName, tie} = gameObj.checkWinner();
+        console.log(someoneWins);
+        if (someoneWins || tie) {
+        container.removeEventListener("click", eventFunction);
+        }
+    }
+    container.addEventListener("click", eventFunction);
+
+    
 }
 
 displayGame();
