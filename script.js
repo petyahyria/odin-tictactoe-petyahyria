@@ -79,7 +79,7 @@ function playGame(playerName1, playerName2){
 
         let someoneWins = winMarker ? true : false;
 
-        return {someoneWins, winnerName, tie};
+        return {someoneWins, winnerName, winMarker, tie};
     }
 
     const turn = (row, column) =>{
@@ -132,6 +132,24 @@ function displayGame(){
         });
     }
 
+    const end = () =>{
+        const {someoneWins, winnerName, winMarker, tie} = gameObj.checkWinner();
+        console.log(someoneWins);
+        const resultContainer = document.querySelector(".result-container");
+        const dialog = document.querySelector(".modal");
+        if (someoneWins) {
+            container.removeEventListener("click", eventFunction);
+            const congratulations = `${winnerName}(${winMarker} wins!)`;
+            resultContainer.textContent = congratulations;
+            dialog.showModal();
+        }else if(tie){
+            container.removeEventListener("click", eventFunction);   
+            const tieDeclaration = "Tie!"
+            resultContainer.textContent = congratulations;
+            dialog.showModal();
+        }
+    }
+
     const container = document.querySelector(".container");
     const eventFunction = e => {
         const target = e.target;
@@ -146,15 +164,9 @@ function displayGame(){
             render();
         }
 
-        const {someoneWins, winnerName, tie} = gameObj.checkWinner();
-        console.log(someoneWins);
-        if (someoneWins || tie) {
-        container.removeEventListener("click", eventFunction);
-        }
+        end();
     }
     container.addEventListener("click", eventFunction);
-
-    
 }
 
 displayGame();

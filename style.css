@@ -63,5 +63,25 @@ body{
     
 }
 
+.result-container{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+dialog{
+    border: none;
+    background-color: #f8fafc;
+    width: 50vmax;
+    height: 50vmax;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 50px;
+}
+
+dialog:focus{
+    outline: none;
+}
+
 
 
