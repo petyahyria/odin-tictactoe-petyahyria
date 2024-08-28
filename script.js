@@ -88,17 +88,17 @@ function playGame(playerName1, playerName2){
             changeActivePlayer();
             console.table(gameboard.gameboard);
             console.log(activePlayer.name);
-            const {someoneWins, winnerName, tie} = checkWinner();
+            const {someoneWins, winner, tie} = checkWinner();
             if(someoneWins){
-                console.log(`Congratulations! ${winnerName} wins!`);
+                
             }else if(tie){
-                console.log("Tie.")
+
             }
         }else{
                 console.log("This cell is alredy filled.");  
         }
     }
-    return { turn, gameboard }}
+    return { turn, gameboard, checkWinner }};
 }
 
 function displayGame(){
@@ -140,7 +140,10 @@ function displayGame(){
     const container = document.querySelector(".container");
     container.addEventListener("click", e => {
         const target = e.target;
-        if (target.id !== "tictactoe") {
+        let ids = ["btn00","btn01","btn02","btn10","btn11","btn12","btn20","btn21","btn22"]
+
+        if (ids.some(el=>el===target.id)) {
+            console.log(target.id);
             const row = +target.id[3];
             console.log(target.id[3]);
             const column = +target.id[4];
