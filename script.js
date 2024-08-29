@@ -10,8 +10,10 @@ function createPlayer(name, marker){
     return {name, marker, score};
 }
 
-function playGame(playerName1, playerName2){
-    return function(){const player1 = createPlayer(playerName1, "X");
+function playGame(){
+    return function(playerName1, playerName2){
+    
+    const player1 = createPlayer(playerName1, "X");
     const player2 = createPlayer(playerName2, "O");
     const gameboard = createGameboard();
     console.table(gameboard.gameboard);
@@ -96,8 +98,9 @@ function playGame(playerName1, playerName2){
     return { turn, gameboard, checkWinner }};
 }
 
-function displayGame(){
-    const gameObj = playGame()();
+function displayGame(playerName1, playerName2){
+
+    const gameObj = playGame()(playerName1, playerName2);
     console.log(gameObj);
     const gameboardArray = gameObj.gameboard.gameboard;
     const createCross = () =>{
@@ -169,4 +172,19 @@ function displayGame(){
     container.addEventListener("click", eventFunction);
 }
 
-displayGame();
+function start(){
+    const startContainer = document.querySelector(".start-container");
+    const startBtn = document.querySelector(".start-btn");
+    const nameInput1 = document.querySelector("#name1");
+    const nameInput2 = document.querySelector("#name2");
+    startBtn.addEventListener("click", () => {
+        if(nameInput1.value && nameInput2.value){
+            displayGame(nameInput1.value, nameInput2.value);
+            startContainer.classList.remove("active");
+        }else{
+            alert("Fill in all fields");
+        }
+    });
+}
+
+start();

@@ -84,6 +84,7 @@ dialog:focus, input:focus{
 }
 
 .start-container{
+    display: none;
     top: 0;
     position: absolute;
     background-color: #f1f5f9;
@@ -129,5 +130,9 @@ dialog:focus, input:focus{
 .start > button:hover {
     background-color: #f87171;
     color: #f8fafc;
+}
+
+.active{
+    display: block;
 }
 
