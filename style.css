@@ -172,7 +172,6 @@ dialog:focus, input:focus{
 .btn{
     display: block;
     width: fit-content;
-    grid-area: r;
     height: 4rem;
     font-size: 1.8rem;
     background-color: #334155;
@@ -211,4 +210,10 @@ dialog:focus, input:focus{
     margin: 0;
 }
 
-
+.button-container{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    grid-area: r;
+    margin: 0 auto;
+}

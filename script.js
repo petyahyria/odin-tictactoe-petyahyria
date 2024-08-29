@@ -16,7 +16,6 @@ function playGame(){
     const player1 = createPlayer(playerName1, "X");
     const player2 = createPlayer(playerName2, "O");
     const gameboard = createGameboard();
-    console.table(gameboard.gameboard);
     
     let activePlayer = player1;
 
@@ -88,11 +87,7 @@ function playGame(){
         if (!gameboard.gameboard[row][column] ){
             gameboard.gameboard[row][column] += activePlayer.marker;
             changeActivePlayer();
-            console.table(gameboard.gameboard);
-            console.log(activePlayer.name);
             
-        }else{
-                console.log("This cell is alredy filled.");  
         }
     }
     return { turn, gameboard, checkWinner, player1, player2 }};
@@ -101,7 +96,6 @@ function playGame(){
 function displayGame(playerName1, playerName2){
 
     const gameObj = playGame()(playerName1, playerName2);
-    console.log(gameObj);
     const gameboardArray = gameObj.gameboard.gameboard;
 
     const player1NameContainer = document.querySelector("#player1-name");
@@ -134,11 +128,9 @@ function displayGame(playerName1, playerName2){
     }
 
     const render = () =>{   
-        console.table(gameboardArray);
         gameboardArray.forEach((el, i)=>{
             const row = i;
             el.forEach((elem, column) => {
-                console.log(elem);
                 const cell = document.querySelector(`#btn${row}${column}`);
                 cell.innerHTML = "";
                 if (elem === "X" && !cell.hasChildNodes()) {
@@ -152,7 +144,6 @@ function displayGame(playerName1, playerName2){
     const dialog = document.querySelector(".modal");
     const end = () =>{
         const {someoneWins, winnerName, winMarker, tie} = gameObj.checkWinner();
-        console.log(someoneWins);
         const resultContainer = document.querySelector(".result-container");
         
         if (someoneWins) {
@@ -162,8 +153,6 @@ function displayGame(playerName1, playerName2){
             dialog.showModal();
             if (player1.name === winnerName) {
                 player1.score++;
-                
-                console.log(player1.score);
                 player1ScoreContainer.textContent = player1.score;
             }else{
                 player2.score++;
@@ -187,9 +176,7 @@ function displayGame(playerName1, playerName2){
         let ids = ["btn00","btn01","btn02","btn10","btn11","btn12","btn20","btn21","btn22"]
         
         if (ids.some(el=>el===target.id)) {
-            console.log(target.id);
             const row = +target.id[3];
-            console.log(target.id[3]);
             const column = +target.id[4];
             gameObj.turn(row, column);
             render();
@@ -258,12 +245,18 @@ function start(){
     }
     startBtn.addEventListener("click", startGameFunction);
     const newGameBtn = document.querySelector("#new-game-btn");
-    newGameBtn.addEventListener("click", ()=>{
+    const reset = () => {
         resetScore();
         closeModal();
         startContainer.classList.add("active");
         startBtn.addEventListener("click", startGameFunction);
+    }
+    newGameBtn.addEventListener("click", ()=>{
+        reset()
     });
+
+    const homeBtn = document.querySelector("#home-btn")
+    homeBtn.addEventListener("click", reset)
 }
 
 
