@@ -90,7 +90,7 @@ function playGame(){
             
         }
     }
-    return { turn, gameboard, checkWinner, player1, player2 }};
+    return { turn, gameboard, checkWinner, player1, player2, activePlayer}};
 }
 
 function displayGame(playerName1, playerName2){
@@ -108,6 +108,35 @@ function displayGame(playerName1, playerName2){
     const player2ScoreContainer = document.querySelector("#score-value2");
     player1ScoreContainer.textContent = player1.score
     player2ScoreContainer.textContent = player2.score
+
+    const renderTurnInfo = () =>{
+        const turnPara1 = document.createElement("p");
+        const turnPara2 = document.createElement("p");
+        turnPara1.classList.add("turn");
+        turnPara1.setAttribute("id", "turn1");
+        turnPara2.classList.add("turn");
+        turnPara2.setAttribute("id", "turn2");
+
+        const player1Container = player1NameContainer.parentElement;
+        const player2Container = player2NameContainer.parentElement;
+        player1Container.appendChild(turnPara1);
+        player2Container.appendChild(turnPara2);
+
+        const turnP1 = document.querySelector("#turn1");
+        const turnP2 = document.querySelector("#turn2");
+
+        if(gameObj.activePlayer.name === player1.name){
+            turnP2.textContent = "";
+            turnP1.textContent = `${player1.marker} turns`;
+            gameObj.activePlayer = player2;
+        }else if(gameObj.activePlayer.name === player2.name){
+            turnP1.textContent = "";
+            turnP2.textContent = `${player2.marker} turns`;
+            gameObj.activePlayer = player1;
+        }
+    }
+
+    renderTurnInfo();
 
     const createCross = () =>{
         const cross = document.createElement("div");
@@ -181,6 +210,10 @@ function displayGame(playerName1, playerName2){
             gameObj.turn(row, column);
             render();
         }
+
+        if(!gameObj.checkWinner().someoneWins && !gameObj.checkWinner().tie){
+            renderTurnInfo();
+        }
         
         end();
     }
@@ -202,6 +235,7 @@ function displayGame(playerName1, playerName2){
         emptyGameboardArray();
         closeModal();
         render();
+            renderTurnInfo();
         container.addEventListener("click", eventFunction);
     });
 
@@ -218,7 +252,7 @@ function displayGame(playerName1, playerName2){
         resetScore();
     });
 
-    return {resetScore, closeModal};
+    return {resetScore, closeModal, renderTurnInfo};
 }
 
 function start(){

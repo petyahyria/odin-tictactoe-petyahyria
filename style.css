@@ -217,3 +217,12 @@ dialog:focus, input:focus{
     grid-area: r;
     margin: 0 auto;
 }
+
+#score-value1, #score-value2{
+    color: #f87171;
+}
+
+.turn{
+    font-size: 4rem;
+    color: #f87171;
+}
