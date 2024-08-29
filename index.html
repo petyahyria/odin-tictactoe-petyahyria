@@ -12,6 +12,17 @@
 <body>
     <h1>Tic tac toe</h1>
 
+    <div class="start-container">
+        <div class="start">
+            <h1>Tic tac toe</h1>
+            <label for="name1">Name player1 (X)</label>
+            <input type="text">
+            <label for="name2">Name player2 (O)</label>
+            <input type="text">
+            <button type="button">start</button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="cell" id="btn00"></div>
         <div class="cell" id="btn01"></div>
@@ -24,8 +35,11 @@
         <div class="cell" id="btn22"></div>
     </div>
 
+    <button type="button">Reset</button>
+
     <dialog class="modal">
         <div class="result-container"></div>
+        <button type="button">Reset</button>
     </dialog>
 
     <script src="./script.js"></script>

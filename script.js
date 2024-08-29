@@ -139,7 +139,7 @@ function displayGame(){
         const dialog = document.querySelector(".modal");
         if (someoneWins) {
             container.removeEventListener("click", eventFunction);
-            const congratulations = `${winnerName}(${winMarker} wins!)`;
+            const congratulations = `${winnerName}(${winMarker}) wins!`;
             resultContainer.textContent = congratulations;
             dialog.showModal();
         }else if(tie){

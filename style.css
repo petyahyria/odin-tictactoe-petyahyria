@@ -64,7 +64,7 @@ body{
 }
 
 .result-container{
-    font-size: 3rem;
+    font-size: 10rem;
     font-weight: 600;
 }
 
@@ -79,9 +79,55 @@ dialog{
     padding: 50px;
 }
 
-dialog:focus{
+dialog:focus, input:focus{
     outline: none;
 }
 
+.start-container{
+    top: 0;
+    position: absolute;
+    background-color: #f1f5f9;
+    height: 100vh;
+    width: 100vw;
+}
 
+.start{
+    color: #f8fafc;
+    height: 30vmax;
+    width: 30vmax;
+    margin: 10vmax auto;
+    background-color: #334155;
+    border-radius: 40px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+}
+
+.start > input{
+    height: 3rem;
+    border: none;
+    border-radius: 15px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    font-size: 1.6rem;
+}
+
+.start > button {
+    display: block;
+    background-color: #f8fafc;
+    width: 40%;
+    height: 5rem;
+    color: #334155;
+    font-size: 3rem;
+    border: none;
+    border-radius: 15px;
+    margin: 20px auto;
+}
+
+.start > button:hover {
+    background-color: #f87171;
+    color: #f8fafc;
+}
 
