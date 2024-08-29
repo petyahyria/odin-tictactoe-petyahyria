@@ -44,12 +44,17 @@
             <h1 id="player2-name">s</h1>
             <p class="score">Score: <span id="score-value2"></span></p>
         </div>
-        <button type="button" id="reset">Reset</button>
+        <button type="button" id="reset" class="btn">Reset</button>
     </div>
 
     <dialog class="modal">
-        <div class="result-container"></div>
-        <button type="button">Reset</button>
+        <div>
+            <div class="result-container"></div>
+            <div class="flex">
+                <button type="button" class="btn">Reset</button>
+                <button type="button" class="btn" id="one-more-round-btn">One more round</button>
+            </div>
+        </div>
     </dialog>
 
     <script src="./script.js"></script>

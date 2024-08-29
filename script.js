@@ -95,7 +95,7 @@ function playGame(){
                 console.log("This cell is alredy filled.");  
         }
     }
-    return { turn, gameboard, checkWinner }};
+    return { turn, gameboard, checkWinner, player1, player2 }};
 }
 
 function displayGame(playerName1, playerName2){
@@ -103,6 +103,18 @@ function displayGame(playerName1, playerName2){
     const gameObj = playGame()(playerName1, playerName2);
     console.log(gameObj);
     const gameboardArray = gameObj.gameboard.gameboard;
+
+    const player1NameContainer = document.querySelector("#player1-name");
+    player1NameContainer.textContent = playerName1;
+    const player2NameContainer = document.querySelector("#player2-name");
+    player2NameContainer.textContent = playerName2;
+
+    const {player1, player2} = gameObj;
+    const player1ScoreContainer = document.querySelector("#score-value1");
+    const player2ScoreContainer = document.querySelector("#score-value2");
+    player1ScoreContainer.textContent = player1.score
+    player2ScoreContainer.textContent = player2.score
+
     const createCross = () =>{
         const cross = document.createElement("div");
         cross.classList.add("cross");
@@ -122,10 +134,13 @@ function displayGame(playerName1, playerName2){
     }
 
     const render = () =>{   
+        console.table(gameboardArray);
         gameboardArray.forEach((el, i)=>{
             const row = i;
             el.forEach((elem, column) => {
+                console.log(elem);
                 const cell = document.querySelector(`#btn${row}${column}`);
+                cell.innerHTML = "";
                 if (elem === "X" && !cell.hasChildNodes()) {
                     cell.appendChild(createCross());
                 }else if(elem === "O" && !cell.hasChildNodes()){
@@ -134,30 +149,43 @@ function displayGame(playerName1, playerName2){
             });
         });
     }
-
+    const dialog = document.querySelector(".modal");
     const end = () =>{
         const {someoneWins, winnerName, winMarker, tie} = gameObj.checkWinner();
         console.log(someoneWins);
         const resultContainer = document.querySelector(".result-container");
-        const dialog = document.querySelector(".modal");
+        
         if (someoneWins) {
             container.removeEventListener("click", eventFunction);
             const congratulations = `${winnerName}(${winMarker}) wins!`;
             resultContainer.textContent = congratulations;
             dialog.showModal();
+            if (player1.name === winnerName) {
+                player1.score++;
+                
+                console.log(player1.score);
+                player1ScoreContainer.textContent = player1.score;
+            }else{
+                player2.score++;
+                
+                player2ScoreContainer.textContent = player1.score;
+            }
         }else if(tie){
             container.removeEventListener("click", eventFunction);   
             const tieDeclaration = "Tie!"
-            resultContainer.textContent = congratulations;
+            resultContainer.textContent = tieDeclaration;
             dialog.showModal();
         }
     }
 
+
+
+    
     const container = document.querySelector(".container");
     const eventFunction = e => {
         const target = e.target;
         let ids = ["btn00","btn01","btn02","btn10","btn11","btn12","btn20","btn21","btn22"]
-
+        
         if (ids.some(el=>el===target.id)) {
             console.log(target.id);
             const row = +target.id[3];
@@ -166,10 +194,22 @@ function displayGame(playerName1, playerName2){
             gameObj.turn(row, column);
             render();
         }
-
+        
         end();
     }
     container.addEventListener("click", eventFunction);
+
+    const oneMoreRoundBtn = document.querySelector("#one-more-round-btn");
+    oneMoreRoundBtn.addEventListener("click", ()=>{
+        for (let index = 0; index < gameboardArray.length; index++) {
+            for(let i = 0; i < 3; i++){
+                gameboardArray[index][i] = "";
+            }
+        }   
+        dialog.close();
+        render();
+        container.addEventListener("click", eventFunction);
+    });
 }
 
 function start(){
