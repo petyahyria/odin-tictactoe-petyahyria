@@ -208,39 +208,63 @@ function displayGame(playerName1, playerName2){
     }
 
     const oneMoreRoundBtn = document.querySelector("#one-more-round-btn");
+    const closeModal = () => {
+        dialog.close();
+    }
     oneMoreRoundBtn.addEventListener("click", ()=>{
         emptyGameboardArray();
-        dialog.close();
+        closeModal();
         render();
         container.addEventListener("click", eventFunction);
     });
 
     const resetScoreBtn = document.querySelector("#resetScore");
-    resetScoreBtn.addEventListener("click", ()=> {
+    const resetScore = () =>{
         emptyGameboardArray();
         player1.score = 0;
         player2.score = 0;
-        player1ScoreContainer.textContent = player1.score
-        player2ScoreContainer.textContent = player2.score
+        player1ScoreContainer.textContent = player1.score;
+        player2ScoreContainer.textContent = player2.score;
         render();
+    }
+    resetScoreBtn.addEventListener("click", ()=> {
+        resetScore();
     });
+
+    return {resetScore, closeModal};
 }
 
 function start(){
     const startContainer = document.querySelector(".start-container");
+    
     const startBtn = document.querySelector(".start-btn");
     const nameInput1 = document.querySelector("#name1");
     const nameInput2 = document.querySelector("#name2");
-    startBtn.addEventListener("click", () => {
+    let resetScore;
+    let closeModal;
+
+    const startGameFunction = () => {
         if(nameInput1.value && nameInput2.value){
-            displayGame(nameInput1.value, nameInput2.value);
+            const game = displayGame(nameInput1.value, nameInput2.value);
+            resetScore = game.resetScore;
+            closeModal = game.closeModal;
             startContainer.classList.remove("active");
             nameInput1.value = "";
             nameInput2.value = "";
+            startBtn.removeEventListener("click", startGameFunction);
         }else{
             alert("Fill in all fields");
         }
+    }
+    startBtn.addEventListener("click", startGameFunction);
+    const newGameBtn = document.querySelector("#new-game-btn");
+    newGameBtn.addEventListener("click", ()=>{
+        resetScore();
+        closeModal();
+        startContainer.classList.add("active");
+        startBtn.addEventListener("click", startGameFunction);
     });
 }
+
 
 start();
