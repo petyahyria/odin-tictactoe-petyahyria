@@ -199,16 +199,30 @@ function displayGame(playerName1, playerName2){
     }
     container.addEventListener("click", eventFunction);
 
-    const oneMoreRoundBtn = document.querySelector("#one-more-round-btn");
-    oneMoreRoundBtn.addEventListener("click", ()=>{
+    const emptyGameboardArray = () =>{
         for (let index = 0; index < gameboardArray.length; index++) {
             for(let i = 0; i < 3; i++){
                 gameboardArray[index][i] = "";
             }
         }   
+    }
+
+    const oneMoreRoundBtn = document.querySelector("#one-more-round-btn");
+    oneMoreRoundBtn.addEventListener("click", ()=>{
+        emptyGameboardArray();
         dialog.close();
         render();
         container.addEventListener("click", eventFunction);
+    });
+
+    const resetScoreBtn = document.querySelector("#resetScore");
+    resetScoreBtn.addEventListener("click", ()=> {
+        emptyGameboardArray();
+        player1.score = 0;
+        player2.score = 0;
+        player1ScoreContainer.textContent = player1.score
+        player2ScoreContainer.textContent = player2.score
+        render();
     });
 }
 
