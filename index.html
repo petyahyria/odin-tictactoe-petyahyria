@@ -10,7 +10,7 @@
     <title>TIC TAC TOE</title>
 </head>
 <body>
-    <h1>Tic tac toe</h1>
+    
 
     <div class="start-container active">
         <div class="start">
@@ -23,19 +23,29 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="cell" id="btn00"></div>
-        <div class="cell" id="btn01"></div>
-        <div class="cell" id="btn02"></div>
-        <div class="cell" id="btn10"></div>
-        <div class="cell" id="btn11"></div>
-        <div class="cell" id="btn12"></div>
-        <div class="cell" id="btn20"></div>
-        <div class="cell" id="btn21"></div>
-        <div class="cell" id="btn22"></div>
+    <div class="game">
+        <h1 class="title">Tic tac toe</h1>
+        <div class="player" id="p1">
+            <h1 id="player1-name">s</h1>
+            <p class="score">Score: <span id="score-value1"></span></p>
+        </div>
+        <div class="container">
+            <div class="cell" id="btn00"></div>
+            <div class="cell" id="btn01"></div>
+            <div class="cell" id="btn02"></div>
+            <div class="cell" id="btn10"></div>
+            <div class="cell" id="btn11"></div>
+            <div class="cell" id="btn12"></div>
+            <div class="cell" id="btn20"></div>
+            <div class="cell" id="btn21"></div>
+            <div class="cell" id="btn22"></div>
+        </div>
+        <div class="player" id="p2">
+            <h1 id="player2-name">s</h1>
+            <p class="score">Score: <span id="score-value2"></span></p>
+        </div>
+        <button type="button" id="reset">Reset</button>
     </div>
-
-    <button type="button">Reset</button>
 
     <dialog class="modal">
         <div class="result-container"></div>

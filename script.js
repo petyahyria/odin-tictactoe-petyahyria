@@ -181,6 +181,8 @@ function start(){
         if(nameInput1.value && nameInput2.value){
             displayGame(nameInput1.value, nameInput2.value);
             startContainer.classList.remove("active");
+            nameInput1.value = "";
+            nameInput2.value = "";
         }else{
             alert("Fill in all fields");
         }

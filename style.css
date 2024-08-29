@@ -20,6 +20,7 @@ body{
 }
 
 .container{
+    grid-area: g;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -135,4 +136,55 @@ dialog:focus, input:focus{
 .active{
     display: block;
 }
+
+.game{
+    display: grid;
+    grid-template-columns: 1fr 2.5fr 1fr;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas: "h h h" "p1 g p2" "r r r";
+    padding: 10px;
+}
+
+.title{
+    grid-area: h;
+}
+
+#p1{
+    grid-area: p1;
+}
+
+#p2{
+    grid-area: p2;
+}
+
+#reset{
+    display: block;
+    width: 40%;
+    grid-area: r;
+    height: 4rem;
+    font-size: 1.8rem;
+    background-color: #334155;
+    border: none;
+    border-radius: 15px;
+    color: #f1f5f9;
+    padding: 10px 30px;
+    font-weight: 600;
+    margin: 0 auto;
+}
+
+.player{
+    padding: 30px;
+    background-color: #334155;
+    border-radius: 30px;
+    font-size: 3rem;
+}
+
+.player > h1{
+    color: #f87171;
+}
+
+.score{
+    color: #f1f5f9;
+}
+
 
